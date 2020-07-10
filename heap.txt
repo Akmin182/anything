@@ -1,0 +1,47 @@
+template <typename T>
+class heap {
+	vector<T> arr;
+	bool(*comp)(T a, T b);
+public:
+	void setCompareFunction(bool(*c)(T a, T b)) {
+		comp = c;
+	}
+	void push(T a) {
+		arr.push_back(a);
+		int index = arr.size() - 1;
+
+		while (index != 0 && comp(arr[(index - 1) / 2], arr[index])) {
+			swap(arr[(index - 1) / 2], arr[index]);
+			index = (index - 1) / 2;
+		}
+	}
+	bool empty() {
+		return arr.empty();
+	}
+	T front() {
+		return arr[0];
+	}
+	void clear() {
+		arr.clear();
+	}
+	void pop() {
+		if (arr.empty())
+			return;
+		arr[0] = arr[arr.size() - 1];
+		arr.pop_back();
+		int index = 0;
+
+		while (1) {
+			if (arr.size() - 1 >= 2*index + 1 && comp(arr[index], arr[2 * index + 1])) {
+				swap(arr[index], arr[2 * index + 1]);
+				index = 2 * index + 1;
+			}
+			else if (arr.size() - 1 >= 2 * index + 2 && comp(arr[index], arr[2 * index + 2])) {
+				swap(arr[index], arr[2 * index + 2]);
+				index = 2 * index + 2;
+			}
+			else
+				break;
+		}
+	}
+};
