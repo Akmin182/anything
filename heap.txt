@@ -1,3 +1,8 @@
+/* 
+#include <vector>
+#include <algorithm>
+*/
+
 template <typename T>
 class heap {
 	vector<T> arr;
@@ -15,6 +20,9 @@ public:
 			index = (index - 1) / 2;
 		}
 	}
+	int size() {
+		return arr.size();
+	}
 	bool empty() {
 		return arr.empty();
 	}
@@ -29,10 +37,12 @@ public:
 			return;
 		arr[0] = arr[arr.size() - 1];
 		arr.pop_back();
+		if (arr.empty())
+			return;
 		int index = 0;
 
 		while (1) {
-			if (arr.size() - 1 >= 2*index + 1 && comp(arr[index], arr[2 * index + 1])) {
+			if (arr.size() - 1 >= 2 * index + 1 && comp(arr[index], arr[2 * index + 1])) {
 				swap(arr[index], arr[2 * index + 1]);
 				index = 2 * index + 1;
 			}
